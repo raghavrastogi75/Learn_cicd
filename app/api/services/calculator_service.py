@@ -29,23 +29,38 @@ class CalculatorService(LoggerMixin):
 
             # Perform calculation based on operation
             if operation == "add":
+                if b is None:
+                    raise ValueError("Second operand is required for addition")
                 result = a + b
             elif operation == "subtract":
+                if b is None:
+                    raise ValueError("Second operand is required for subtraction")
                 result = a - b
             elif operation == "multiply":
+                if b is None:
+                    raise ValueError("Second operand is required for multiplication")
                 result = a * b
             elif operation == "divide":
+                if b is None:
+                    raise ValueError("Second operand is required for division")
                 if b == 0:
                     raise ValueError("Division by zero is not allowed")
                 result = a / b
             elif operation == "power":
+                if b is None:
+                    raise ValueError("Second operand is required for power operation")
                 result = math.pow(a, b)
             elif operation == "sqrt":
                 if a < 0:
                     raise ValueError("Cannot calculate square root of negative number")
                 result = math.sqrt(a)
             elif operation == "abs_diff":
+                if b is None:
+                    raise ValueError("Second operand is required for absolute difference")
                 result = abs(a - b)
+            elif operation == "cubic":
+                # Cubic power: raise number to power of 3
+                result = math.pow(a, 3)
             else:
                 raise ValueError(f"Unsupported operation: {operation}")
 

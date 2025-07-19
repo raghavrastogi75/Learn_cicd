@@ -3,7 +3,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.pool import NullPool
 from sqlalchemy import text
 import structlog
-from app.api.utils.config import settings
+from app.api.utils.config import config as settings
 
 logger = structlog.get_logger()
 

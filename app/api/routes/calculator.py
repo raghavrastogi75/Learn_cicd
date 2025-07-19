@@ -36,7 +36,7 @@ class CalculatorRouter(LoggerMixin):
         """Perform mathematical calculation"""
         try:
             # Validate operation-specific requirements
-            if request.operation != "sqrt" and request.b is None:
+            if request.operation not in ["sqrt"] and request.b is None:
                 raise HTTPException(
                     status_code=400,
                     detail="Second operand is required for this operation",
@@ -59,7 +59,7 @@ class CalculatorRouter(LoggerMixin):
         except ValueError as e:
             raise HTTPException(status_code=400, detail=str(e))
         except Exception as e:
-            self.logger.error(
+            logger.error(
                 "Calculation error",
                 operation=request.operation,
                 a=request.a,
@@ -108,6 +108,18 @@ class CalculatorRouter(LoggerMixin):
                 description="Calculate square root of number",
                 parameters=["a"],
             ),
+            OperationInfo(
+                name="abs_diff",
+                symbol="|a-b|",
+                description="Calculate absolute difference between two numbers",
+                parameters=["a", "b"],
+            ),
+            OperationInfo(
+                name="cubic",
+                symbol="³",
+                description="Raise number to the power of 3 (cubic)",
+                parameters=["a"],
+            ),
         ]
 
         return OperationsResponse(operations=operations, count=len(operations))
@@ -127,7 +139,7 @@ class CalculatorRouter(LoggerMixin):
                 timestamp=datetime.now(),
             )
         except Exception as e:
-            self.logger.error("Calculator health check failed", error=str(e))
+            logger.error("Calculator health check failed", error=str(e))
 
             raise HTTPException(
                 status_code=503, detail=f"Calculator service unhealthy: {str(e)}"

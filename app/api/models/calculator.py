@@ -8,7 +8,7 @@ class CalculationRequest(BaseModel):
     """Request model for calculator operations"""
 
     operation: Literal[
-        "add", "subtract", "multiply", "divide", "power", "sqrt"
+        "add", "subtract", "multiply", "divide", "power", "sqrt", "abs_diff", "cubic"
     ] = Field(..., description="Mathematical operation to perform")
     a: float = Field(..., description="First operand")
     b: Optional[float] = Field(
@@ -28,7 +28,7 @@ class CalculationRequest(BaseModel):
     def validate_second_operand(cls, v, values):
         """Validate second operand based on operation"""
         operation = values.get("operation")
-        if operation != "sqrt" and v is None:
+        if operation not in ["sqrt", "cubic"] and v is None:
             raise ValueError("Second operand is required for this operation")
         return v
 

@@ -77,6 +77,25 @@ class TestCalculatorService:
         assert result == 0.0
 
     @pytest.mark.asyncio
+    async def test_cubic_operation(self, calculator_service, mock_session):
+        """Test cubic power operation"""
+        # Test positive number
+        result = await calculator_service.calculate("cubic", 2, None, mock_session)
+        assert result == 8.0
+
+        # Test negative number
+        result = await calculator_service.calculate("cubic", -3, None, mock_session)
+        assert result == -27.0
+
+        # Test zero
+        result = await calculator_service.calculate("cubic", 0, None, mock_session)
+        assert result == 0.0
+
+        # Test decimal number
+        result = await calculator_service.calculate("cubic", 1.5, None, mock_session)
+        assert result == 3.375
+
+    @pytest.mark.asyncio
     async def test_division_by_zero(self, calculator_service, mock_session):
         """Test division by zero error"""
         with pytest.raises(ValueError, match="Division by zero is not allowed"):
