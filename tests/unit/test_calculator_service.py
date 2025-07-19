@@ -1,7 +1,9 @@
-import pytest
 from unittest.mock import AsyncMock, MagicMock
-from app.api.services.calculator_service import CalculatorService
+
+import pytest
+
 from app.api.database.models import Calculation
+from app.api.services.calculator_service import CalculatorService
 
 
 @pytest.fixture

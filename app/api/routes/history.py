@@ -1,17 +1,14 @@
+from datetime import datetime
+from typing import Optional
+
+import structlog
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.ext.asyncio import AsyncSession
-from typing import Optional
-import structlog
-from datetime import datetime
 
-from app.api.models.history import (
-    HistoryResponse,
-    StatisticsResponse,
-    ClearHistoryResponse,
-    CalculationHistory,
-)
-from app.api.services.calculator_service import calculator_service
 from app.api.database.connection import get_db
+from app.api.models.history import (CalculationHistory, ClearHistoryResponse,
+                                    HistoryResponse, StatisticsResponse)
+from app.api.services.calculator_service import calculator_service
 from app.api.utils.logger import LoggerMixin
 
 router = APIRouter()

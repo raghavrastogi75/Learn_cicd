@@ -1,10 +1,12 @@
 import math
 import time
-from typing import Optional, List, Dict, Any
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, func, text
-from sqlalchemy.orm import selectinload
+from typing import Any, Dict, List, Optional
+
 import structlog
+from sqlalchemy import func, select, text
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import selectinload
+
 from app.api.database.models import Calculation
 from app.api.utils.logger import LoggerMixin
 from app.api.utils.metrics import CALCULATION_COUNT, CALCULATION_LATENCY
@@ -56,7 +58,9 @@ class CalculatorService(LoggerMixin):
                 result = math.sqrt(a)
             elif operation == "abs_diff":
                 if b is None:
-                    raise ValueError("Second operand is required for absolute difference")
+                    raise ValueError(
+                        "Second operand is required for absolute difference"
+                    )
                 result = abs(a - b)
             elif operation == "cubic":
                 # Cubic power: raise number to power of 3
@@ -199,9 +203,9 @@ class CalculatorService(LoggerMixin):
 
             return {
                 "total_calculations": total_calculations,
-                "most_used_operation": most_used_operation[0]
-                if most_used_operation
-                else None,
+                "most_used_operation": (
+                    most_used_operation[0] if most_used_operation else None
+                ),
                 "average_result": float(average_result),
                 "today_calculations": today_calculations,
                 "week_calculations": week_calculations,

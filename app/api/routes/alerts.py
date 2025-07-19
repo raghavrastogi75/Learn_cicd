@@ -2,11 +2,12 @@
 Alert webhook endpoint for Grafana notifications
 """
 
-from fastapi import APIRouter, Request, HTTPException
-from fastapi.responses import JSONResponse
 import logging
-from typing import Dict, Any
 from datetime import datetime
+from typing import Any, Dict
+
+from fastapi import APIRouter, HTTPException, Request
+from fastapi.responses import JSONResponse
 
 logger = logging.getLogger(__name__)
 router = APIRouter()

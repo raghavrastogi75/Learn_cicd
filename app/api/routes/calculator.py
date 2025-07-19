@@ -1,20 +1,16 @@
-from fastapi import APIRouter, Depends, HTTPException, Request
-from sqlalchemy.ext.asyncio import AsyncSession
-from slowapi import Limiter
-from slowapi.util import get_remote_address
-import structlog
 from datetime import datetime
 
-from app.api.models.calculator import (
-    CalculationRequest,
-    CalculationResponse,
-    OperationsResponse,
-    OperationInfo,
-    HealthResponse,
-    ErrorResponse,
-)
-from app.api.services.calculator_service import calculator_service
+import structlog
+from fastapi import APIRouter, Depends, HTTPException, Request
+from slowapi import Limiter
+from slowapi.util import get_remote_address
+from sqlalchemy.ext.asyncio import AsyncSession
+
 from app.api.database.connection import get_db
+from app.api.models.calculator import (CalculationRequest, CalculationResponse,
+                                       ErrorResponse, HealthResponse,
+                                       OperationInfo, OperationsResponse)
+from app.api.services.calculator_service import calculator_service
 from app.api.utils.logger import LoggerMixin
 
 router = APIRouter()

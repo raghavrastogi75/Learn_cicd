@@ -1,36 +1,39 @@
-import pytest
 from unittest.mock import AsyncMock, MagicMock
+
+import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy.ext.asyncio import AsyncSession
-from app.api.main import app
+
 from app.api.database.connection import get_db
+from app.api.main import app
 
 
 @pytest.fixture
 def client():
     """Create test client with mocked database"""
+
     # Mock the database dependency
     async def mock_get_db():
         mock_session = AsyncMock()
         mock_session.add = MagicMock()
         mock_session.commit = AsyncMock()
         mock_session.refresh = AsyncMock()
-        
+
         # Mock query results for history endpoints
         mock_result = MagicMock()
         mock_result.scalars.return_value.all.return_value = []
         mock_result.scalar.side_effect = [0, 0.0, 0, 0]  # For statistics
         mock_result.first.return_value = ("add", 0)
         mock_session.execute.return_value = mock_result
-        
+
         yield mock_session
-    
+
     # Override the database dependency
     app.dependency_overrides[get_db] = mock_get_db
-    
+
     client = TestClient(app)
     yield client
-    
+
     # Clean up
     app.dependency_overrides.clear()
 
@@ -38,27 +41,28 @@ def client():
 @pytest.fixture(autouse=True)
 def setup_dependencies():
     """Setup dependencies for all tests"""
+
     # Mock the database dependency
     async def mock_get_db():
         mock_session = AsyncMock()
         mock_session.add = MagicMock()
         mock_session.commit = AsyncMock()
         mock_session.refresh = AsyncMock()
-        
+
         # Mock query results for history endpoints
         mock_result = MagicMock()
         mock_result.scalars.return_value.all.return_value = []
         mock_result.scalar.side_effect = [0, 0.0, 0, 0]  # For statistics
         mock_result.first.return_value = ("add", 0)
         mock_session.execute.return_value = mock_result
-        
+
         yield mock_session
-    
+
     # Override the database dependency
     app.dependency_overrides[get_db] = mock_get_db
-    
+
     yield
-    
+
     # Clean up
     app.dependency_overrides.clear()
 
@@ -161,14 +165,14 @@ class TestCalculatorEndpoints:
         assert response.status_code == 200
         data = response.json()
         assert data["result"] == 7.0
-        
+
         # Test negative difference (should be positive)
         payload = {"operation": "abs_diff", "a": 3, "b": 10}
         response = client.post("/api/calculator/calculate", json=payload)
         assert response.status_code == 200
         data = response.json()
         assert data["result"] == 7.0
-        
+
         # Test same numbers
         payload = {"operation": "abs_diff", "a": 5, "b": 5}
         response = client.post("/api/calculator/calculate", json=payload)

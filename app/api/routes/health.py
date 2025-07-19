@@ -1,8 +1,9 @@
+import time
+from datetime import datetime
+
+import structlog
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
-import structlog
-from datetime import datetime
-import time
 
 from app.api.database.connection import get_db, health_check_db
 from app.api.utils.logger import LoggerMixin
@@ -37,9 +38,9 @@ class HealthRouter(LoggerMixin):
             response_time = time.time() - start_time
 
             return {
-                "status": "healthy"
-                if db_health["status"] == "healthy"
-                else "unhealthy",
+                "status": (
+                    "healthy" if db_health["status"] == "healthy" else "unhealthy"
+                ),
                 "service": "calculator-api",
                 "timestamp": datetime.now().isoformat(),
                 "version": "1.0.0",
