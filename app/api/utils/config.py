@@ -43,6 +43,7 @@ class Config:
     # Security Configuration
     SECRET_KEY: str = os.getenv("SECRET_KEY", "dev-secret-key-change-in-production")
     ALLOWED_HOSTS: list = os.getenv("ALLOWED_HOSTS", "*").split(",")
+    CORS_ORIGINS: list = os.getenv("CORS_ORIGINS", "*").split(",")
 
     # Rate Limiting
     RATE_LIMIT_PER_MINUTE: int = int(os.getenv("RATE_LIMIT_PER_MINUTE", "60"))
