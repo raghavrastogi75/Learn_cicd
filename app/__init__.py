@@ -1,1 +1,1 @@
-# Calculator API Application 
+# Calculator API Application
