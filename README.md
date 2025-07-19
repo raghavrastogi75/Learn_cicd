@@ -74,7 +74,7 @@ docker-compose up --build
 
 The project includes a comprehensive CI/CD pipeline with:
 
-### GitHub Actions Workflow
+### GitHub Actions Workflow (`.github/workflows/main.yml`)
 - **Linting & Formatting**: Black, isort, flake8, mypy
 - **Testing**: Unit tests, integration tests, coverage reporting
 - **Security**: Bandit security scan, dependency safety check

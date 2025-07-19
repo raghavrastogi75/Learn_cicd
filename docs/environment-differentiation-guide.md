@@ -143,7 +143,7 @@ git push origin feature/add-abs-diff
 
 ### 2. CI/CD Pipeline (GitHub Actions)
 ```yaml
-# ci-cd/github-actions/ci.yml
+# .github/workflows/main.yml
 name: CI/CD Pipeline
 on:
   push:

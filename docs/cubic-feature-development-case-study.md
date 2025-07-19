@@ -99,7 +99,7 @@ git push origin feature/add-cubic-power
 
 ## 🔄 Phase 2: CI/CD Pipeline
 
-### 2.1 GitHub Actions Workflow (`ci-cd/github-actions/ci.yml`)
+### 2.1 GitHub Actions Workflow (`.github/workflows/main.yml`)
 
 The CI/CD pipeline automatically triggers on push to master branch:
 
