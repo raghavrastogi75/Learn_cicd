@@ -1,0 +1,67 @@
+apiVersion: 1
+
+groups:
+  - name: Calculator API Alerts
+    folder: Calculator API
+    interval: 30s
+    rules:
+      - name: High Error Rate
+        condition: |
+          sum(rate(http_requests_total{status=~"4..|5.."}[5m])) / sum(rate(http_requests_total[5m])) > 0.05
+        for: 2m
+        labels:
+          severity: warning
+          service: calculator-api
+        annotations:
+          summary: "High error rate detected"
+          description: "Error rate is {{ $value | humanizePercentage }} for the last 5 minutes"
+          dashboard: "Calculator API Dashboard"
+          runbook: "Check API logs and database connectivity"
+
+      - name: High Response Time
+        condition: |
+          histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m])) > 0.5
+        for: 1m
+        labels:
+          severity: warning
+          service: calculator-api
+        annotations:
+          summary: "High response time detected"
+          description: "95th percentile response time is {{ $value }}s"
+          dashboard: "Calculator API Dashboard"
+
+      - name: API Down
+        condition: |
+          up{job="calculator-api"} == 0
+        for: 30s
+        labels:
+          severity: critical
+          service: calculator-api
+        annotations:
+          summary: "Calculator API is down"
+          description: "The calculator API service is not responding"
+          dashboard: "Calculator API Dashboard"
+
+      - name: High Request Rate
+        condition: |
+          sum(rate(http_requests_total[5m])) > 50
+        for: 2m
+        labels:
+          severity: info
+          service: calculator-api
+        annotations:
+          summary: "High request rate detected"
+          description: "Request rate is {{ $value }} requests per second"
+          dashboard: "Calculator API Dashboard"
+
+      - name: Database Connection Issues
+        condition: |
+          rate(calculator_operations_total{status="error"}[5m]) > 0.1
+        for: 1m
+        labels:
+          severity: warning
+          service: calculator-api
+        annotations:
+          summary: "Database operation errors detected"
+          description: "{{ $value }} database errors per second"
+          dashboard: "Calculator API Dashboard" 
