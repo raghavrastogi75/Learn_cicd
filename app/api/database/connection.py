@@ -51,7 +51,7 @@ async def init_db():
 
 async def close_db():
     """Close database connection"""
-    global engine
+    global engine  # noqa: F824
 
     if engine:
         await engine.dispose()
