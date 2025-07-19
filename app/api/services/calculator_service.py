@@ -5,7 +5,6 @@ from typing import Any, Dict, List, Optional
 import structlog
 from sqlalchemy import func, select, text
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.orm import selectinload
 
 from app.api.database.models import Calculation
 from app.api.utils.logger import LoggerMixin

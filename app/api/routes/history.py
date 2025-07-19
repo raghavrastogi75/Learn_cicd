@@ -1,5 +1,4 @@
 from datetime import datetime
-from typing import Optional
 
 import structlog
 from fastapi import APIRouter, Depends, HTTPException, Query

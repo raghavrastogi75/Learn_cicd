@@ -2,7 +2,6 @@ from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 
-from app.api.database.models import Calculation
 from app.api.services.calculator_service import CalculatorService
 
 
@@ -126,8 +125,6 @@ class TestCalculatorService:
     @pytest.mark.asyncio
     async def test_store_calculation_success(self, calculator_service, mock_session):
         """Test successful calculation storage"""
-        calculation = Calculation(operation="add", operand_a=5, operand_b=3, result=8.0)
-
         await calculator_service._store_calculation("add", 5, 3, 8.0, mock_session)
 
         mock_session.add.assert_called_once()

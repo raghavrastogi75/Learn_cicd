@@ -49,7 +49,7 @@ class HealthRouter(LoggerMixin):
             }
 
         except Exception as e:
-            self.logger.error("Health check failed", error=str(e))
+            logger.error("Health check failed", error=str(e))
             return {
                 "status": "unhealthy",
                 "service": "calculator-api",
@@ -75,7 +75,7 @@ class HealthRouter(LoggerMixin):
                 }
 
         except Exception as e:
-            self.logger.error("Readiness check failed", error=str(e))
+            logger.error("Readiness check failed", error=str(e))
             return {
                 "status": "not_ready",
                 "reason": str(e),

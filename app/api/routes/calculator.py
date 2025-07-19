@@ -10,7 +10,6 @@ from app.api.database.connection import get_db
 from app.api.models.calculator import (
     CalculationRequest,
     CalculationResponse,
-    ErrorResponse,
     HealthResponse,
     OperationInfo,
     OperationsResponse,

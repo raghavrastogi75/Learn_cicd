@@ -2,7 +2,7 @@ from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 from fastapi.testclient import TestClient
-from sqlalchemy.ext.asyncio import AsyncSession
+
 
 from app.api.database.connection import get_db
 from app.api.main import app
@@ -206,7 +206,8 @@ class TestCalculatorEndpoints:
         """Test missing second operand for non-sqrt operations"""
         payload = {"operation": "add", "a": 5}
         response = client.post("/api/calculator/calculate", json=payload)
-        # The API correctly rejects the request, but returns 500 due to service layer error
+        # The API correctly rejects the request, but returns 500 due to
+        # service layer error
         assert response.status_code == 500  # Service layer error
         data = response.json()
         assert "Internal server error" in data["detail"]

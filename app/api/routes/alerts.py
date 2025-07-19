@@ -4,7 +4,7 @@ Alert webhook endpoint for Grafana notifications
 
 import logging
 from datetime import datetime
-from typing import Any, Dict
+
 
 from fastapi import APIRouter, HTTPException, Request
 from fastapi.responses import JSONResponse
@@ -30,9 +30,10 @@ async def alert_webhook(request: Request):
 
             if status == "firing":
                 logger.error(f"🚨 FIRING ALERT: {alert_name} (Severity: {severity})")
-                logger.error(
-                    f"   Description: {alert.get('annotations', {}).get('description', 'No description')}"
+                description = alert.get("annotations", {}).get(
+                    "description", "No description"
                 )
+                logger.error(f"   Description: {description}")
 
                 # Here you could:
                 # - Send to Slack

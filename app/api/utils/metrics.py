@@ -1,6 +1,6 @@
 import time
 
-from fastapi import Request, Response
+from fastapi import Response
 from prometheus_client import (
     CONTENT_TYPE_LATEST,
     Counter,

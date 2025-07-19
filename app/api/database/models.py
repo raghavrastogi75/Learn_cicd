@@ -1,4 +1,4 @@
-from sqlalchemy import Column, DateTime, Float, Integer, String, Text
+from sqlalchemy import Column, DateTime, Float, Integer, String
 from sqlalchemy.sql import func
 
 from app.api.database.connection import Base
@@ -14,10 +14,15 @@ class Calculation(Base):
     operand_a = Column(Float, nullable=False)
     operand_b = Column(Float, nullable=True)
     result = Column(Float, nullable=False)
-    created_at = Column(DateTime(timezone=True), server_default=func.now(), index=True)
+    created_at = Column(
+        DateTime(timezone=True), server_default=func.now(), index=True
+    )
 
     def __repr__(self):
-        return f"<Calculation(id={self.id}, operation='{self.operation}', result={self.result})>"
+        return (
+            f"<Calculation(id={self.id}, operation='{self.operation}', "
+            f"result={self.result})>"
+        )
 
     def to_dict(self):
         """Convert model to dictionary"""
