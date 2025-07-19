@@ -1,385 +1,189 @@
-# 🧮 Calculator API with Kubernetes & Monitoring
+# 🧮 Calculator API - CI/CD Learning Project
 
-A production-ready Calculator API deployed on Kubernetes with comprehensive monitoring, auto-scaling, and CI/CD pipeline.
+A comprehensive calculator API project designed to demonstrate modern CI/CD practices, environment differentiation, and DevOps best practices.
 
 ## 🚀 Features
 
-- **FastAPI-based Calculator API** with mathematical operations
-- **Kubernetes Deployment** with auto-scaling (HPA)
-- **Prometheus & Grafana Monitoring** with custom dashboards
-- **PostgreSQL Database** for calculation history
-- **Redis Caching** for performance optimization
-- **Traffic Generation** for load testing
-- **Comprehensive Testing** (unit & integration)
-- **CI/CD Pipeline** with GitHub Actions
-- **Production-ready** with health checks and metrics
+### Mathematical Operations
+- **Basic Operations**: Add, Subtract, Multiply, Divide
+- **Advanced Operations**: Power, Square Root, Absolute Difference
+- **New Feature**: **Cubic Power** (x³) - See [Case Study](docs/cubic-feature-development-case-study.md)
 
-## 📊 Architecture
+### API Endpoints
+- `POST /api/calculator/calculate` - Perform calculations
+- `GET /api/calculator/operations` - List available operations
+- `GET /api/history` - View calculation history
+- `GET /health` - Health check
+- `GET /metrics` - Prometheus metrics
+
+## 🏗️ Architecture
 
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   Load Balancer │    │   Prometheus    │    │     Grafana     │
-│   (Ingress)     │    │   (Monitoring)  │    │   (Dashboard)   │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
-         │                       │                       │
-         ▼                       ▼                       ▼
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│  Calculator API │    │   PostgreSQL    │    │      Redis      │
-│  (10 Pods)      │    │   (Database)    │    │    (Cache)      │
+│   Development   │    │   Staging       │    │   Production    │
+│   Environment   │───▶│   Environment   │───▶│   Environment   │
+│                 │    │                 │    │                 │
+│ • Local testing │    │ • Integration   │    │ • Live users    │
+│ • Unit tests    │    │ • E2E tests     │    │ • High traffic  │
+│ • Quick deploy  │    │ • Performance   │    │ • Monitoring    │
 └─────────────────┘    └─────────────────┘    └─────────────────┘
 ```
 
-## 🛠️ Tech Stack
+## 📚 Documentation
 
-- **Backend**: FastAPI, Python 3.11
-- **Database**: PostgreSQL 15
-- **Cache**: Redis 7
-- **Container**: Docker
-- **Orchestration**: Kubernetes
-- **Monitoring**: Prometheus, Grafana
-- **CI/CD**: GitHub Actions
-- **Testing**: pytest, coverage
-- **Code Quality**: black, flake8, mypy
+- [Environment Differentiation Guide](docs/environment-differentiation-guide.md) - How environments are configured and managed
+- [Cubic Feature Development Case Study](docs/cubic-feature-development-case-study.md) - Complete feature development lifecycle
+- [Deployment Guide](docs/deployment-guide.md) - How to deploy to different environments
+- [Kubernetes Deployment Guide](docs/kubernetes-deployment-guide.md) - K8s deployment instructions
+- [Alerting Guide](docs/alerting-guide.md) - Monitoring and alerting setup
 
-## 📁 Project Structure
-
-```
-Learn_cicd/
-├── app/                          # Application code
-│   ├── api/                      # FastAPI application
-│   │   ├── database/             # Database models & connection
-│   │   ├── models/               # Pydantic models
-│   │   ├── routes/               # API endpoints
-│   │   ├── services/             # Business logic
-│   │   └── utils/                # Utilities (config, logger, metrics)
-│   └── database/                 # Database initialization
-├── ci-cd/                        # CI/CD configuration
-│   └── github-actions/           # GitHub Actions workflows
-├── infrastructure/               # Infrastructure as Code
-│   └── kubernetes/               # Kubernetes manifests
-├── monitoring/                   # Monitoring configuration
-│   ├── grafana/                  # Grafana dashboards & configs
-│   └── prometheus/               # Prometheus configuration
-├── scripts/                      # Utility scripts
-├── tests/                        # Test suite
-│   ├── integration/              # Integration tests
-│   └── unit/                     # Unit tests
-├── docs/                         # Documentation
-├── Dockerfile                    # Container definition
-├── docker-compose.yml            # Local development
-├── requirements.txt              # Python dependencies
-└── README.md                     # This file
-```
-
-## 🚀 Quick Start
+## 🎯 Quick Start
 
 ### Prerequisites
-
-- Docker Desktop with Kubernetes enabled
-- kubectl CLI tool
 - Python 3.11+
-- Git
+- Docker & Docker Compose
+- Kubernetes cluster (for full deployment)
 
-### 1. Clone the Repository
-
+### Local Development
 ```bash
-git clone <your-repo-url>
+# Clone the repository
+git clone <repository-url>
 cd Learn_cicd
-```
 
-### 2. Set Up Local Development
-
-```bash
 # Create virtual environment
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+source venv/bin/activate  # On Windows: .\venv\Scripts\Activate.ps1
 
 # Install dependencies
 pip install -r requirements.txt
 
-# Run locally with Docker Compose
-docker-compose up -d
+# Run tests
+python -m pytest tests/ -v
+
+# Start the application
+python -m uvicorn app.api.main:app --reload
 ```
 
-### 3. Deploy to Kubernetes
+### Docker Deployment
+```bash
+# Build and run with Docker Compose
+docker-compose up --build
+```
+
+## 🔄 CI/CD Pipeline
+
+The project includes a comprehensive CI/CD pipeline with:
+
+### GitHub Actions Workflow
+- **Linting & Formatting**: Black, isort, flake8, mypy
+- **Testing**: Unit tests, integration tests, coverage reporting
+- **Security**: Bandit security scan, dependency safety check
+- **Building**: Docker image build and push
+- **Deployment**: Automated deployment to staging, manual production deployment
+
+### Environment Progression
+1. **Development** → Local development and testing
+2. **Staging** → Integration testing and validation
+3. **Production** → Live user traffic with safety measures
+
+## 🧪 Feature Development Demo
+
+### Cubic Power Feature Case Study
+This project includes a complete demonstration of adding a new feature (cubic power operation) through all environments:
 
 ```bash
-# Create namespace
-kubectl apply -f infrastructure/kubernetes/namespace.yml
-
-# Deploy database and cache
-kubectl apply -f infrastructure/kubernetes/postgres-deployment.yml
-kubectl apply -f infrastructure/kubernetes/redis-deployment.yml
-
-# Deploy the API
-kubectl apply -f infrastructure/kubernetes/api-deployment.yml
-
-# Deploy monitoring
-kubectl apply -f infrastructure/kubernetes/monitoring.yml
-kubectl apply -f infrastructure/kubernetes/prometheus-config.yml
-kubectl apply -f infrastructure/kubernetes/prometheus-deployment.yml
-kubectl apply -f infrastructure/kubernetes/grafana-provisioning.yml
+# Run the feature development demonstration
+python scripts/feature-development-demo.py
 ```
 
-### 4. Access the Services
+The demo shows:
+- ✅ Feature branch creation and development
+- ✅ Unit testing and validation
+- ✅ CI/CD pipeline execution
+- ✅ Staging deployment and testing
+- ✅ Production deployment with safety checks
+- ✅ Feature verification in all environments
 
-```bash
-# API (Calculator)
-kubectl port-forward -n calculator-app svc/calculator-api 8080:80
-# Access: http://localhost:8080
-
-# Prometheus (Monitoring)
-kubectl port-forward -n calculator-app svc/prometheus 9090:9090
-# Access: http://localhost:9090
-
-# Grafana (Dashboards)
-kubectl port-forward -n calculator-app svc/grafana 3001:3000
-# Access: http://localhost:3001 (admin/admin)
-```
+### What You'll Learn
+- **Environment Differentiation**: How each environment is configured differently
+- **Progressive Safety**: Safety measures that increase per environment
+- **Testing Strategy**: Comprehensive testing at each stage
+- **Deployment Process**: Blue-green deployment and rollback strategies
+- **Monitoring**: Metrics collection and alerting setup
 
 ## 📊 Monitoring & Observability
 
 ### Prometheus Metrics
-
-The API exposes comprehensive metrics:
-
-- **HTTP Metrics**: Request rate, response times, error rates
-- **Business Metrics**: Calculator operations, success rates
-- **System Metrics**: Memory usage, CPU, garbage collection
-- **Custom Metrics**: Operation-specific counters
+- Request count and latency
+- Operation-specific metrics
+- Error rates and status codes
+- Database connection metrics
 
 ### Grafana Dashboards
+- Calculator API performance dashboard
+- Environment-specific monitoring
+- Alerting and notification channels
 
-Pre-configured dashboards include:
+### Health Checks
+- Application health endpoints
+- Database connectivity checks
+- Third-party service monitoring
 
-- **Calculator API Production Dashboard**: Real-time performance metrics
-- **Request Rate Analysis**: Traffic patterns and load distribution
-- **Error Rate Monitoring**: 4xx/5xx error tracking
-- **Response Time Distribution**: 50th, 95th, 99th percentiles
-- **Calculator Operations**: Add, subtract, multiply, divide rates
+## 🛠️ Development Tools
 
-### Key Metrics to Monitor
+### Scripts
+- `scripts/deploy-dev.ps1` - Deploy to development
+- `scripts/deploy-staging.sh` - Deploy to staging
+- `scripts/deploy-prod.sh` - Deploy to production
+- `scripts/compare-environments.py` - Compare environment configurations
+- `scripts/show-environments.py` - Display environment overview
 
-```promql
-# API Health
-up{job="calculator-api"}
+### Testing
+- Unit tests for business logic
+- Integration tests for API endpoints
+- Performance and load testing
+- Security vulnerability scanning
 
-# Request Rate
-rate(http_requests_total{job="calculator-api"}[5m])
+## 🔒 Security Features
 
-# Error Rate
-rate(http_requests_total{job="calculator-api", status=~"4..|5.."}[5m])
-
-# Response Time (95th percentile)
-histogram_quantile(0.95, rate(http_request_duration_seconds_bucket{job="calculator-api"}[5m]))
-
-# Calculator Operations
-rate(calculator_operations_total{job="calculator-api"}[5m])
-```
-
-## 🔄 Auto-Scaling
-
-The API uses Horizontal Pod Autoscaler (HPA) with:
-
-- **Minimum Pods**: 3
-- **Maximum Pods**: 10
-- **Target CPU**: 70%
-- **Scale Up Cooldown**: 60s
-- **Scale Down Cooldown**: 300s
-
-### Load Testing
-
-Use the included traffic generator:
-
-```bash
-python scripts/generate_traffic.py
-```
-
-Options:
-1. Continuous traffic at 5 RPS
-2. Simulate traffic patterns
-3. Custom traffic burst
-4. Exit
-
-## 🧪 Testing
-
-### Run Tests
-
-```bash
-# Unit tests
-pytest tests/unit/ -v
-
-# Integration tests
-pytest tests/integration/ -v
-
-# With coverage
-pytest --cov=app tests/ -v
-```
-
-### Test Coverage
-
-The project includes comprehensive test coverage for:
-- API endpoints
-- Business logic
-- Database operations
-- Error handling
-- Integration scenarios
-
-## 🔧 Configuration
-
-### Environment Variables
-
-```bash
-# Database
-DATABASE_URL=postgresql://user:password@postgres:5432/calculator
-
-# Redis
-REDIS_URL=redis://redis:6379
-
-# API Settings
-API_HOST=0.0.0.0
-API_PORT=8000
-LOG_LEVEL=INFO
-```
-
-### Kubernetes Configuration
-
-All Kubernetes resources are configured via YAML manifests in `infrastructure/kubernetes/`:
-
-- **Deployments**: Application, database, monitoring
-- **Services**: Load balancing and service discovery
-- **ConfigMaps**: Application configuration
-- **Secrets**: Sensitive data (database passwords, etc.)
-- **PersistentVolumeClaims**: Data persistence
-- **HorizontalPodAutoscaler**: Auto-scaling configuration
-
-## 🚀 CI/CD Pipeline
-
-### GitHub Actions Workflow
-
-The CI/CD pipeline includes:
-
-1. **Code Quality Checks**
-   - Linting (flake8)
-   - Code formatting (black)
-   - Type checking (mypy)
-
-2. **Testing**
-   - Unit tests
-   - Integration tests
-   - Coverage reporting
-
-3. **Security Scanning**
-   - Dependency vulnerability scanning
-   - Container image scanning
-
-4. **Build & Deploy**
-   - Docker image building
-   - Kubernetes deployment
-   - Health checks
-
-### Pipeline Stages
-
-```yaml
-name: CI/CD Pipeline
-on: [push, pull_request]
-
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - Checkout code
-      - Setup Python
-      - Install dependencies
-      - Run linting
-      - Run tests
-      - Generate coverage report
-
-  build:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - Build Docker image
-      - Push to registry
-      - Deploy to Kubernetes
-```
+- Rate limiting per environment
+- Input validation and sanitization
+- Secure configuration management
+- Environment-specific secrets
+- CORS and trusted host middleware
 
 ## 📈 Performance
 
-### Current Metrics (Example)
-
-- **Request Rate**: 5+ RPS sustained
-- **Response Time**: <100ms (95th percentile)
-- **Success Rate**: 99.5%+
-- **Auto-scaling**: 3-10 pods based on load
-- **Memory Usage**: ~50MB per pod
-- **CPU Usage**: ~10% per pod under normal load
-
-### Scaling Behavior
-
-- **Scale Up**: Triggers at 70% CPU usage
-- **Scale Down**: Occurs after 5 minutes of low usage
-- **Pod Startup Time**: ~30 seconds
-- **Health Check**: 5-second intervals
-
-## 🔍 Troubleshooting
-
-### Common Issues
-
-1. **Grafana Not Accessible**
-   ```bash
-   kubectl get pods -n calculator-app -l app=grafana
-   kubectl logs -n calculator-app -l app=grafana
-   ```
-
-2. **Prometheus Connection Issues**
-   ```bash
-   kubectl get svc -n calculator-app prometheus
-   kubectl describe pod -n calculator-app -l app=prometheus
-   ```
-
-3. **API Scaling Issues**
-   ```bash
-   kubectl get hpa -n calculator-app
-   kubectl describe hpa calculator-api -n calculator-app
-   ```
-
-### Useful Commands
-
-```bash
-# Check all resources
-kubectl get all -n calculator-app
-
-# View logs
-kubectl logs -n calculator-app -l app=calculator-api
-
-# Monitor pods
-kubectl get pods -n calculator-app -w
-
-# Check metrics
-kubectl top pods -n calculator-app
-```
+- Async/await for non-blocking operations
+- Database connection pooling
+- Redis caching (optional)
+- Prometheus metrics collection
+- Structured logging with correlation IDs
 
 ## 🤝 Contributing
 
 1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests
-5. Run the test suite
-6. Submit a pull request
+2. Create a feature branch: `git checkout -b feature/amazing-feature`
+3. Make your changes and add tests
+4. Run the test suite: `python -m pytest tests/ -v`
+5. Commit your changes: `git commit -m 'feat: Add amazing feature'`
+6. Push to the branch: `git push origin feature/amazing-feature`
+7. Open a Pull Request
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
+## 🎓 Learning Objectives
 
-- FastAPI for the excellent web framework
-- Kubernetes for container orchestration
-- Prometheus & Grafana for monitoring
-- The open-source community for inspiration
+This project demonstrates:
 
----
+1. **Modern CI/CD Practices**: Automated testing, building, and deployment
+2. **Environment Management**: Proper separation and configuration of environments
+3. **Infrastructure as Code**: Kubernetes manifests and deployment automation
+4. **Monitoring & Observability**: Metrics, logging, and alerting
+5. **Security Best Practices**: Input validation, rate limiting, and secure configuration
+6. **Testing Strategies**: Unit, integration, and performance testing
+7. **DevOps Tools**: Docker, Kubernetes, Prometheus, Grafana
 
-**Happy Calculating! 🧮✨** 
+Perfect for learning modern software development practices and DevOps methodologies! 

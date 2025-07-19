@@ -29,14 +29,15 @@ class TrafficGenerator:
         self.running = False
         
         # Traffic patterns
-        self.operations = ['add', 'subtract', 'multiply', 'divide', 'power', 'sqrt']
+        self.operations = ['add', 'subtract', 'multiply', 'divide', 'power', 'sqrt', 'abs_diff']
         self.operation_weights = {
-            'add': 0.3,      # 30% of requests
-            'subtract': 0.25, # 25% of requests
-            'multiply': 0.2,  # 20% of requests
-            'divide': 0.15,   # 15% of requests
+            'add': 0.25,      # 25% of requests
+            'subtract': 0.2,  # 20% of requests
+            'multiply': 0.15, # 15% of requests
+            'divide': 0.1,    # 10% of requests
             'power': 0.05,    # 5% of requests
-            'sqrt': 0.05      # 5% of requests
+            'sqrt': 0.05,     # 5% of requests
+            'abs_diff': 0.2   # 20% of requests
         }
         
         # Traffic intensity patterns (requests per second)
@@ -73,6 +74,11 @@ class TrafficGenerator:
             # For sqrt, only need one positive number
             a = random.uniform(1, 1000)
             return {'operation': operation, 'a': a}
+        elif operation == 'abs_diff':
+            # For abs_diff, need two numbers (can be any range)
+            a = random.uniform(-1000, 1000)
+            b = random.uniform(-1000, 1000)
+            return {'operation': operation, 'a': a, 'b': b}
         else:
             # For other operations, need two numbers
             a = random.uniform(-1000, 1000)

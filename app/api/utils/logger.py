@@ -2,7 +2,7 @@ import structlog
 import logging
 import sys
 from typing import Any, Dict
-from app.api.utils.config import settings
+from app.api.utils.config import config as settings
 
 
 def setup_logging():
