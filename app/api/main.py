@@ -12,7 +12,7 @@ from contextlib import asynccontextmanager
 from app.api.routes import calculator, history, health, alerts
 from app.api.utils.logger import setup_logging
 from app.api.database.connection import init_db, close_db
-from app.api.utils.config import settings
+from app.api.utils.config import config as settings
 from app.api.utils.metrics import PrometheusMiddleware, get_metrics
 
 # Setup structured logging
