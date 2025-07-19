@@ -5,7 +5,6 @@ Alert webhook endpoint for Grafana notifications
 import logging
 from datetime import datetime
 
-
 from fastapi import APIRouter, HTTPException, Request
 from fastapi.responses import JSONResponse
 

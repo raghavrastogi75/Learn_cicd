@@ -3,7 +3,6 @@ from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.ext.declarative import declarative_base
 
-
 from app.api.utils.config import config as settings
 
 logger = structlog.get_logger()

@@ -438,9 +438,7 @@ def main():
     success = demo.run_complete_demo()
 
     if success:
-        print(
-            "\n🎉 Feature development lifecycle demonstration completed successfully!"
-        )
+        print("\n🎉 Feature development lifecycle demonstration completed successfully!")
         print("   The cubic power feature is now available in all environments.")
     else:
         print("\n💥 Demo encountered issues. Please check the logs above.")

@@ -3,7 +3,6 @@ from unittest.mock import AsyncMock, MagicMock
 import pytest
 from fastapi.testclient import TestClient
 
-
 from app.api.database.connection import get_db
 from app.api.main import app
 

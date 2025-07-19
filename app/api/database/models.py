@@ -14,9 +14,7 @@ class Calculation(Base):
     operand_a = Column(Float, nullable=False)
     operand_b = Column(Float, nullable=True)
     result = Column(Float, nullable=False)
-    created_at = Column(
-        DateTime(timezone=True), server_default=func.now(), index=True
-    )
+    created_at = Column(DateTime(timezone=True), server_default=func.now(), index=True)
 
     def __repr__(self):
         return (
