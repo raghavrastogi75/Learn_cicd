@@ -62,7 +62,7 @@ jobs:
 
       - name: Run unit tests
         run: |
-          pytest tests/unit/ --cov=app --cov-report=xml --cov-report=html
+          PYTHONPATH=$PYTHONPATH:. pytest tests/unit/ --cov=app --cov-report=xml --cov-report=html
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
@@ -119,7 +119,7 @@ jobs:
           DATABASE_URL: postgresql://postgres:password@localhost:5432/calculator_test_db
           REDIS_URL: redis://localhost:6379
         run: |
-          pytest tests/integration/ -v
+          PYTHONPATH=$PYTHONPATH:. pytest tests/integration/ -v
 
   # Security Scan
   security:
