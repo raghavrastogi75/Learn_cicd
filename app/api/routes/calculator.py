@@ -36,7 +36,7 @@ class CalculatorRouter(LoggerMixin):
         """Perform mathematical calculation"""
         try:
             # Validate operation-specific requirements
-            if request.operation not in ["sqrt"] and request.b is None:
+            if request.operation not in ["sqrt", "cubic"] and request.b is None:
                 raise HTTPException(
                     status_code=400,
                     detail="Second operand is required for this operation",
