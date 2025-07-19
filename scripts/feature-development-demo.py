@@ -244,7 +244,7 @@ class FeatureDevelopmentDemo:
         self.print_step("1.4", "Code Review")
         print("   ✅ Code review completed")
         print("   ✅ All checks passed")
-        print("   ✅ Ready for merge to main")
+        print("   ✅ Ready for merge to master")
         
         return True
     
@@ -253,7 +253,7 @@ class FeatureDevelopmentDemo:
         self.print_header("PHASE 2: CI/CD PIPELINE")
         
         self.print_step("2.1", "GitHub Actions Triggered")
-        print("   ✅ Push to main branch detected")
+        print("   ✅ Push to master branch detected")
         print("   ✅ CI/CD pipeline started")
         
         self.print_step("2.2", "Linting and Formatting")

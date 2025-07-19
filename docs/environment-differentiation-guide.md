@@ -147,9 +147,9 @@ git push origin feature/add-abs-diff
 name: CI/CD Pipeline
 on:
   push:
-    branches: [main]
+    branches: [master]
   pull_request:
-    branches: [main]
+    branches: [master]
 
 jobs:
   test:
@@ -198,10 +198,10 @@ python -m pytest tests/integration/ -v
 The production deployment script includes comprehensive safety measures:
 
 ```bash
-# Check if on main branch
+# Check if on master branch
 CURRENT_BRANCH=$(git branch --show-current)
-if [ "$CURRENT_BRANCH" != "main" ]; then
-    echo "❌ Must be on main branch for production deployment"
+if [ "$CURRENT_BRANCH" != "master" ]; then
+    echo "❌ Must be on master branch for production deployment"
     exit 1
 fi
 

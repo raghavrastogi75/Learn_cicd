@@ -36,10 +36,10 @@ if ! command -v docker &> /dev/null; then
     exit 1
 fi
 
-# Check if we're on the main branch
+# Check if we're on the master branch
 CURRENT_BRANCH=$(git branch --show-current)
-if [ "$CURRENT_BRANCH" != "main" ]; then
-    echo -e "${RED}❌ Must be on main branch for production deployment${NC}"
+if [ "$CURRENT_BRANCH" != "master" ]; then
+    echo -e "${RED}❌ Must be on master branch for production deployment${NC}"
     echo -e "${RED}   Current branch: $CURRENT_BRANCH${NC}"
     exit 1
 fi

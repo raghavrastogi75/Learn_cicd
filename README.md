@@ -83,8 +83,8 @@ The project includes a comprehensive CI/CD pipeline with:
 
 ### Environment Progression
 1. **Development** → Local development and testing
-2. **Staging** → Integration testing and validation
-3. **Production** → Live user traffic with safety measures
+2. **Staging** → Integration testing and validation (deploys from master branch)
+3. **Production** → Live user traffic with safety measures (manual deployment from master)
 
 ## 🧪 Feature Development Demo
 

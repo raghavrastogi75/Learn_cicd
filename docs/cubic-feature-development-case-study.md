@@ -93,13 +93,15 @@ python -m pytest tests/unit/ -v
 ```bash
 git add .
 git commit -m "feat: Add cubic power operation to calculator API"
+git push origin feature/add-cubic-power
+# Create Pull Request to master branch
 ```
 
 ## 🔄 Phase 2: CI/CD Pipeline
 
 ### 2.1 GitHub Actions Workflow (`ci-cd/github-actions/ci.yml`)
 
-The CI/CD pipeline automatically triggers on push to main branch:
+The CI/CD pipeline automatically triggers on push to master branch:
 
 #### A. Linting and Formatting
 - ✅ Black code formatting check
