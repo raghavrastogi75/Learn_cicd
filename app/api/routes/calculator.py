@@ -7,9 +7,14 @@ from slowapi.util import get_remote_address
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.database.connection import get_db
-from app.api.models.calculator import (CalculationRequest, CalculationResponse,
-                                       ErrorResponse, HealthResponse,
-                                       OperationInfo, OperationsResponse)
+from app.api.models.calculator import (
+    CalculationRequest,
+    CalculationResponse,
+    ErrorResponse,
+    HealthResponse,
+    OperationInfo,
+    OperationsResponse,
+)
 from app.api.services.calculator_service import calculator_service
 from app.api.utils.logger import LoggerMixin
 
