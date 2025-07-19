@@ -91,8 +91,8 @@ class TestCalculatorEndpoints:
         response = client.get("/api/calculator/operations")
         assert response.status_code == 200
         data = response.json()
-        assert data["count"] == 7
-        assert len(data["operations"]) == 7
+        assert data["count"] == 8
+        assert len(data["operations"]) == 8
 
         # Check specific operations
         operations = {op["name"]: op for op in data["operations"]}
@@ -103,6 +103,7 @@ class TestCalculatorEndpoints:
         assert "power" in operations
         assert "sqrt" in operations
         assert "abs_diff" in operations
+        assert "cubic" in operations
 
     def test_calculate_addition(self, client):
         """Test addition calculation"""
@@ -174,6 +175,31 @@ class TestCalculatorEndpoints:
 
         # Test same numbers
         payload = {"operation": "abs_diff", "a": 5, "b": 5}
+        response = client.post("/api/calculator/calculate", json=payload)
+        assert response.status_code == 200
+        data = response.json()
+        assert data["result"] == 0.0
+
+    def test_calculate_cubic(self, client):
+        """Test cubic calculation"""
+        payload = {"operation": "cubic", "a": 3}
+        response = client.post("/api/calculator/calculate", json=payload)
+        assert response.status_code == 200
+        data = response.json()
+        assert data["success"] is True
+        assert data["operation"] == "cubic"
+        assert data["a"] == 3
+        assert data["result"] == 27.0
+
+        # Test with negative number
+        payload = {"operation": "cubic", "a": -2}
+        response = client.post("/api/calculator/calculate", json=payload)
+        assert response.status_code == 200
+        data = response.json()
+        assert data["result"] == -8.0
+
+        # Test with zero
+        payload = {"operation": "cubic", "a": 0}
         response = client.post("/api/calculator/calculate", json=payload)
         assert response.status_code == 200
         data = response.json()
